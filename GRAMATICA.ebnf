@@ -1,0 +1,31 @@
+programa       = { comando } ;
+comando        = declaracao, ";"
+               | atribuicao, ";"
+               | saida, ";"
+               | entrada, ";"
+               | condicional
+               | repeticao
+               | "BREAK", ";" ;
+
+declaracao     = ("POKER_FACE" | "VARIAVEL" | "TRUE_STORY" | "CONSTANTE"), tipo, identificador, "=", expressao ;
+tipo           = "OVER_9000" | "INTEIRO" | "ME_GUSTA" | "TEXTO" | "STRING" | "FUCK_YEAH" | "BOOLEANO" ;
+atribuicao     = identificador, "=", expressao ;
+saida          = ("CEREAL_GUY" | "IMPRIMIR"), expressao ;
+entrada        = ("ASK_ME_ANYTHING" | "LER"), identificador ;
+condicional    = ("DERP" | "SE"), "(", expressao, ")", bloco, [ ("I_LIED" | "SENAO"), bloco ] ;
+repeticao      = ("FOREVER_ALONE" | "ENQUANTO"), "(", expressao, ")", bloco ;
+bloco          = "{", { comando }, "}" ;
+
+expressao      = logica_or ;
+logica_or      = logica_and, { "||", logica_and } ;
+logica_and     = igualdade, { "&&", igualdade } ;
+igualdade      = comparacao, { ("==" | "!="), comparacao } ;
+comparacao     = termo, { ("<" | "<=" | ">" | ">="), termo } ;
+termo          = fator, { ("+" | "-"), fator } ;
+fator          = unario, { ("*" | "/"), unario } ;
+unario         = [ "!" | "-" ], primario ;
+primario       = inteiro | texto | "VERDADEIRO" | "FALSO" | identificador | "(", expressao, ")" ;
+identificador  = letra, { letra | digito | "_" } ;
+inteiro        = digito, { digito } ;
+texto          = '"', { caractere }, '"' ;
+comentario     = "//", { qualquer caractere exceto quebra de linha } ;

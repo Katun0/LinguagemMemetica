@@ -1,0 +1,18 @@
+// Demonstração dos requisitos obrigatórios da RageLang
+POKER_FACE OVER_9000 idade = 20;
+POKER_FACE ME_GUSTA nome = "RageLang";
+POKER_FACE OVER_9000 contador = 0;
+
+CEREAL_GUY("Informe seu nome:");
+ASK_ME_ANYTHING(nome);
+
+DERP (idade >= 18) {
+    CEREAL_GUY("Maior de idade");
+} I_LIED {
+    CEREAL_GUY("Menor de idade");
+}
+
+FOREVER_ALONE (contador < 3) {
+    CEREAL_GUY(nome + " em repetição");
+    contador = contador + 1;
+}

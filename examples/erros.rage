@@ -1,0 +1,8 @@
+// Caso semântico: idade foi declarada como inteiro, mas recebe texto.
+POKER_FACE OVER_9000 idade = "vinte";
+
+// Outros exemplos para testar individualmente:
+// POKER_FACE OVER_9000 x = 1
+// DERP (x >= ) { CEREAL_GUY("incompleto"); }
+// POKER_FACE OVER_9000 n = @;
+// CEREAL_GUY(nao_declarada);
