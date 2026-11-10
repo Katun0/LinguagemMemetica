@@ -1,27 +1,23 @@
 from __future__ import annotations
-
 import argparse
 import sys
 from pathlib import Path
-from .compiler import compile_source, SemanticError
-from .lexer import LexicalError
-from .parser import ParseError, Parser
-from .compiler import SemanticAnalyzer
-from .lexer import Lexer
+from .compiler import compile_source, SemanticError, SemanticAnalyzer
+from .lexer import Lexer, LexicalError
+from .parser import Parser, ParseError
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(description="Tradutor da linguagem memética RageLang para C#")
+    parser = argparse.ArgumentParser(description="Compilador RageLang -> C#")
     parser.add_argument("source", help="arquivo .rage de entrada")
-    parser.add_argument("-o", "--output", help="arquivo .cs de saída; sem esta opção imprime no terminal")
-    parser.add_argument("--check", action="store_true", help="somente verifica léxico, sintático e semântico")
+    parser.add_argument("-o", "--output", help="arquivo .cs de saída (por padrão, stdout)")
+    parser.add_argument("--check", action="store_true", help="apenas valida léxico, sintaxe e semântica")
     args = parser.parse_args(argv)
     try:
         source = Path(args.source).read_text(encoding="utf-8")
         if args.check:
-            tree = Parser(Lexer(source).tokenize()).parse()
-            SemanticAnalyzer().analyze(tree)
-            print("OK: programa válido nos níveis léxico, sintático e semântico.")
+            SemanticAnalyzer().analyze(Parser(Lexer(source).tokenize()).parse())
+            print("OK: análise léxica, sintática e semântica concluídas.")
             return 0
         output = compile_source(source)
         if args.output:
@@ -30,8 +26,8 @@ def main(argv=None) -> int:
         else:
             print(output, end="")
         return 0
-    except (OSError, LexicalError, ParseError, SemanticError) as error:
-        print(f"ERRO: {error}", file=sys.stderr)
+    except (OSError, LexicalError, ParseError, SemanticError) as exc:
+        print(f"ERRO: {exc}", file=sys.stderr)
         return 1
 
 

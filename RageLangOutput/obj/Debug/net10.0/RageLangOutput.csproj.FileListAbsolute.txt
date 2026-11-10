@@ -1,0 +1,14 @@
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\bin\Debug\net10.0\RageLangOutput.exe
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\bin\Debug\net10.0\RageLangOutput.deps.json
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\bin\Debug\net10.0\RageLangOutput.runtimeconfig.json
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\bin\Debug\net10.0\RageLangOutput.dll
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\bin\Debug\net10.0\RageLangOutput.pdb
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\RageLangOutput.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\RageLangOutput.AssemblyInfoInputs.cache
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\RageLangOutput.AssemblyInfo.cs
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\RageLangOutput.csproj.CoreCompileInputs.cache
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\RageLangOutput.dll
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\refint\RageLangOutput.dll
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\RageLangOutput.pdb
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\RageLangOutput.genruntimeconfig.cache
+C:\Users\MASTER OF PUPPETS\Downloads\LinguagemMemetica_corrigida\RageLangOutput\obj\Debug\net10.0\ref\RageLangOutput.dll

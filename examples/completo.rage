@@ -1,18 +1,16 @@
-// Demonstração dos requisitos obrigatórios da RageLang
-POKER_FACE OVER_9000 idade = 20;
-POKER_FACE ME_GUSTA nome = "RageLang";
-POKER_FACE OVER_9000 contador = 0;
+// Um programa de exemplo com os memes clássicos
+TRUE_STORY OVER_9000 limite = 9000;
+POKER_FACE OVER_9000 poder = 8999;
+POKER_FACE FUCK_YEAH acabou = NO_GUY;
 
-CEREAL_GUY("Informe seu nome:");
-ASK_ME_ANYTHING(nome);
-
-DERP (idade >= 18) {
-    CEREAL_GUY("Maior de idade");
-} I_LIED {
-    CEREAL_GUY("Menor de idade");
-}
-
-FOREVER_ALONE (contador < 3) {
-    CEREAL_GUY(nome + " em repetição");
-    contador = contador + 1;
+FOREVER_ALONE (!acabou) {
+    DERP (poder > limite) {
+        CEREAL_GUY("It's Over 9000!");
+        acabou = VERDADEIRO;
+    } I_LIED DERP (poder == limite) {
+        CEREAL_GUY("Not Bad");
+    } I_LIED {
+        CEREAL_GUY("Forever Alone");
+    }
+    poder = poder + 1;
 }
