@@ -74,10 +74,3 @@ A linguagem também aceita vários sinônimos em português, como `SE`, `ENQUANT
 - Tratamento de escapes e validação de números inválidos.
 - Casos de teste de regressão.
 
-  COMO RODAR:
-  Compilar o ragelang para C#: python -m ragelang.cli examples/completo.rage -o Programa.cs
-  - Isso criará um arquivo Programa.cs na pasta principal.
-  Executar o C#: dotnet new console -o RageLangOutput
-Copie o C# gerado para dentro do projeto, substituindo o Program.cs pelo powershell: Copy-Item Programa.cs RageLangOutput/Program.cs -Force
-Execute o C# no terminal do vscode: dotnet run --project RageLangOutput
-Executar os testes do compilador: python -m unittest discover -s tests -v
