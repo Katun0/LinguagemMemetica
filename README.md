@@ -2,6 +2,8 @@
 
 Playground web para a linguagem memética RageLang. O compilador Python original foi mantido em `backend/ragelang/` (lexer, parser, análise semântica e gerador C#). A interface em React + TypeScript usa Monaco Editor, Material UI e Lucide.
 
+DEPLOY: https://rage-lang-ojeb.vercel.app/
+
 ## Pré-requisitos
 - Python 3.10+
 - Node.js 20+
