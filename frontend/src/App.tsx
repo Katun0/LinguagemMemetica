@@ -53,6 +53,29 @@ const theme = createTheme({
 });
 const API = import.meta.env.VITE_API_URL?.replace(/\/$/, "") ?? "";
 
+const memeTicker = [
+  "TROLLFACE MODE: ON",
+  "MUITO CÓDIGO • MUITO MEME",
+  "IT'S OVER 9000!",
+  "RageLang Playground",
+  "Forever Alone loop detected",
+  "Derp approved",
+  "Compiled with memes",
+  "FACEBOOK MEME ENERGY",
+  "Y2K INTERNET VIBES",
+];
+
+const memeStickers = [
+  "TROLLFACE",
+  "FOREVER ALONE",
+  "ME GUSTA",
+  "NOT BAD",
+  "DERP",
+  "I LIED",
+  "Y U NO CODE?",
+  "LOL INTERNET",
+];
+
 function Logo() {
   return (
     <div className="brand">
@@ -67,6 +90,39 @@ function Logo() {
   );
 }
 
+function MemeTicker() {
+  return (
+    <div className="meme-ticker">
+      <div className="meme-ticker-track">
+        {[...memeTicker, ...memeTicker].map((item, index) => (
+          <span key={`${item}-${index}`} className="meme-ticker-item">
+            ★ {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function StickerCloud() {
+  return (
+    <div className="sticker-cloud" aria-hidden="true">
+      {memeStickers.map((item, index) => (
+        <span
+          key={item}
+          className={`sticker sticker-${(index % 4) + 1}`}
+          style={{
+            left: `${8 + index * 10}%`,
+            top: `${(index % 2) * 18 + 4}%`,
+          }}
+        >
+          {item}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export default function App() {
   const [tab, setTab] = useState<"playground" | "docs" | "about">("playground");
   const [active, setActive] = useState<ExampleKey>("poder");
@@ -76,6 +132,8 @@ export default function App() {
   const [result, setResult] = useState<Result | null>(null);
   const [logs, setLogs] = useState<Log[]>([
     { type: "info", content: "RageLang Terminal v1.0.0" },
+    { type: "info", content: "Inicializando memes..." },
+    { type: "success", content: "Trollface carregado com sucesso." },
     {
       type: "info",
       content: "Pronto para compilar. Pressione ▶ Executar ou Ctrl+Enter.",
@@ -318,22 +376,33 @@ export default function App() {
             </div>
           )}
         </header>
+
+        <MemeTicker />
+
         <main className="main">
           <div className="hero">
+            <StickerCloud />
             <div className="eyebrow">
               <Sparkles size={14} /> A LINGUAGEM MAIS MEMÉTICA DA INTERNET{" "}
               <span className="eyeline" />
             </div>
-            <h1>
+            <h1 className="hero-title">
               Code like a <span>meme.</span>
               <br />
               Compile like a <span className="gradienttext">legend.</span>
             </h1>
-            <p>
-              Aprenda, escreva e execute RageLang direto do navegador. Onde os
-              memes viram código e as ideias viram realidade.
+            <p className="hero-copy">
+              Aprenda, escreva e execute RageLang direto do navegador. Uma
+              linguagem inspirada nos memes clássicos da internet, com energia
+              de Facebook antigo, Rage Comics e caos Y2K.
             </p>
             <div className="heroactions">
+              <div className="meme-badges">
+                <span className="meme-badge">2000s Web</span>
+                <span className="meme-badge">Rage Comics</span>
+                <span className="meme-badge">Facebook Meme Core</span>
+                <span className="meme-badge">Derp Certified</span>
+              </div>
               <button
                 className="primarybtn"
                 onClick={() => {
@@ -768,8 +837,8 @@ export default function App() {
           <div className="footerinner">
             <Logo />
             <span>
-              Feito com <span className="heart">♥</span> e uma dose de memes. ©
-              RageLang
+              Feito com <span className="heart">♥</span>, brilho neon e uma dose
+              absurda de memes clássicos. © RageLang
             </span>
             <button onClick={() => setTab("about")}>
               Sobre o projeto <ExternalLink size={14} />
