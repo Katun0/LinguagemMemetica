@@ -1,15 +1,1173 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Comic+Neue:wght@400;700&family=JetBrains+Mono:wght@400;600;700&family=Oswald:wght@400;500;600;700&display=swap');
-:root{font-family:'Comic Neue','Trebuchet MS',sans-serif;color:#101010;background:#faf8ef;font-synthesis:none}*{box-sizing:border-box}html{scroll-behavior:smooth}html,body,#root{margin:0;min-width:320px;min-height:100%}button,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,a:focus-visible{outline:3px solid #e50022;outline-offset:4px}p{line-height:1.55}h1,h2,h3,p{margin-top:0}.app{overflow:hidden;min-height:100vh;background:#faf8ef}.topbar{position:relative;z-index:50;background:#fff;border-bottom:3px solid #111}.navinner{max-width:1420px;padding:0 32px;min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}.wordmark{display:flex;align-items:center;gap:7px;white-space:nowrap;border:0;background:none;padding:0;font:700 27px 'Oswald',sans-serif;letter-spacing:-1px;color:#111}.wordmark>img{height:48px;width:48px}.wordmark span span{color:#e00020}.wordmark b{color:#efcf00}.navlinks{display:flex;gap:14px;align-items:center}.navlinks button{border:2px solid transparent;background:transparent;padding:11px 12px;font:600 15px 'Oswald',sans-serif;letter-spacing:.3px}.navlinks button:hover,.navlinks button.chosen{border-bottom-color:#d60020}.headerstamp,.est-stamp,.section-label,.server-label,.ide-panel-label,.folder-label,.editorstats,.ide-foot,.doc-number{font-family:'Oswald',sans-serif;letter-spacing:1.2px}.headerstamp{font-size:13px;border:2px solid #111;padding:7px 12px;background:#ffdd00;box-shadow:3px 3px 0 #111;transform:rotate(-3deg);white-space:nowrap}.headerstamp span{color:#df0023}.menu-toggle{display:none;border:2px solid #111;background:#ffdc00;padding:7px}.graphpaper{background-color:#faf8f1;background-image:linear-gradient(#dce5f0 1px,transparent 1px),linear-gradient(90deg,#dce5f0 1px,transparent 1px);background-size:35px 35px}.hero{border-bottom:3px solid #111;text-align:center;position:relative;padding:32px 18px 66px}.hero-inner{max-width:1130px;margin:auto;position:relative}.est-stamp{display:inline-block;background:#ffdf00;color:#090909;padding:9px 16px;border:3px solid #111;box-shadow:5px 5px #111;font-size:16px;transform:rotate(-3deg);margin:0 auto 26px}.hero h1{font:400 clamp(70px,10vw,150px)/.92 'Oswald',Impact,sans-serif;letter-spacing:-3px;color:#ffdc00;-webkit-text-stroke:2.2px #111;text-shadow:5px 5px 0 #111;margin:10px 0 20px}.hero h1 span{color:#f8f7f3}.hero-subtitle{font:700 clamp(16px,1.6vw,22px)/1.3 'Comic Neue',cursive;max-width:790px;margin:0 auto 50px;color:#111}.hero-subtitle strong{font-weight:700}.meme-poster{margin:0 auto;max-width:890px;min-height:330px;position:relative;overflow:hidden;background:#fff;border:4px solid #111;box-shadow:10px 11px 0 #111;transform:rotate(-2deg)}.poster-faces{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;overflow:hidden;background:repeating-linear-gradient(-12deg,#fff 0 18px,#f2f2ee 19px 22px)}.poster-face{height:215px;width:215px;object-fit:contain;position:absolute;filter:grayscale(1) contrast(1.3)}.face-0{left:-90px;top:-20px;transform:rotate(15deg)}.face-1{left:9%;bottom:-92px;transform:rotate(-12deg)}.face-2{left:26%;top:-100px;transform:rotate(10deg)}.face-3{left:40%;bottom:-95px;transform:rotate(-8deg)}.face-4{left:56%;top:-100px;transform:rotate(12deg)}.face-5{right:2%;bottom:-100px;transform:rotate(-4deg)}.face-6{right:-85px;top:-10px;transform:rotate(-20deg)}.face-7{right:21%;bottom:-100px;transform:rotate(-9deg)}.poster-title{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;gap:20px;white-space:nowrap;color:#df001e;-webkit-text-stroke:2px #111;font:700 clamp(44px,7.7vw,109px)/1 'Oswald',Impact,sans-serif;letter-spacing:-2px;text-shadow:5px 6px 0 #111;transform:rotate(-1deg)}.poster-title span{color:#e00023}.poster-scribble{position:absolute;right:15px;bottom:8px;background:#ffdc00;border:2px solid #111;padding:2px 8px;font:700 14px 'Comic Neue',sans-serif;transform:rotate(5deg)}.hero-cta{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:84px}.comic-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid #111;border-radius:0;padding:12px 19px;font:500 17px 'Oswald',sans-serif;letter-spacing:.4px;box-shadow:4px 4px 0 #111;transition:transform .15s,box-shadow .15s}.comic-btn:not(:disabled):hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #111}.comic-btn:active{transform:translate(3px,3px);box-shadow:1px 1px #111}.comic-btn.red{color:white;background:#dc0022}.comic-btn.yellow{background:#ffde00;color:#111}.comic-btn.plain{background:#fff;color:#111}.hero-corner{position:absolute;font:700 19px 'Comic Neue';transform:rotate(-12deg);color:#e00022}.hero-corner.left{left:0;top:45%}.hero-corner.right{right:0;top:55%;transform:rotate(13deg);color:#111}.site-main{max-width:1280px;margin:auto;padding:0 28px}.gallery-section,.playground-section,.docs-section,.about-section{padding:72px 0 84px;text-align:center}.section-label{display:inline-block;background:#ffdf00;padding:7px 13px;border:2px solid #111;font-size:13px;margin-bottom:20px;transform:rotate(-2deg)}.comic-heading{font:500 clamp(37px,5vw,65px)/1.1 'Oswald',Impact,sans-serif;letter-spacing:1px;margin:0 0 8px}.comic-heading em{font-style:normal;color:#db0023}.section-description{font-size:17px;margin:8px auto 34px;max-width:680px}.meme-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;max-width:930px;margin:42px auto 0}.meme-card{padding:16px 16px 20px;background:#fff;border:3px solid #111;box-shadow:6px 7px 0 #111;transform:rotate(var(--tilt));transition:transform .18s,box-shadow .18s;min-width:0}.meme-card:hover{transform:rotate(0) translateY(-7px);box-shadow:8px 12px 0 #111}.meme-card.card-yellow{background:#ffe25a}.meme-card.card-red{background:#e20023;color:#fff}.meme-image{height:185px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #222}.meme-image img{height:175px;width:175px;object-fit:contain}.meme-divider{height:2px;background:#111;margin:15px 0 8px}.meme-card strong{display:block;font:600 22px 'Oswald',sans-serif}.meme-card span{display:block;font:700 13px 'Comic Neue',sans-serif}.playground-section{border-top:3px solid #111;scroll-margin-top:20px}.work-header{text-align:left;display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:22px}.work-header .section-label{margin-bottom:10px}.work-header p{margin:8px 0 0}.server-label{white-space:nowrap;padding:9px 12px;border:2px solid #111;background:#ffd800;box-shadow:3px 3px #111;font-size:13px}.server-label.online{background:#bcec95}.server-label.offline{background:#ffb7bd}.ide{display:grid;grid-template-columns:235px minmax(0,1fr);text-align:left;background:#fff;border:3px solid #111;box-shadow:9px 9px 0 #111;min-width:0}.filespanel{background:#fff8e3;border-right:3px solid #111;display:flex;flex-direction:column;min-width:0}.ide-panel-label{background:#ffdd00;border-bottom:2px solid #111;padding:15px 13px;font-size:16px;font-weight:600;display:flex;justify-content:space-between}.folder-label{display:flex;align-items:center;gap:7px;padding:19px 12px 10px;font-size:13px}.fileitem{width:100%;border:0;border-left:5px solid transparent;background:transparent;text-align:left;display:flex;align-items:flex-start;gap:9px;padding:11px 10px;color:#171717;font:600 15px 'Oswald';cursor:pointer}.fileitem svg{flex:0 0 auto;margin-top:3px}.fileitem span{min-width:0;overflow-wrap:anywhere}.fileitem small{font:700 11px 'Comic Neue';display:block;margin-top:3px;color:#60584e}.fileitem:hover{background:#fff}.fileitem.selected{background:#ffe770;border-left-color:#dc0023}.sidebar-meme{margin-top:auto;border-top:2px dashed #111;padding:22px 13px 19px;text-align:center}.sidebar-meme img{width:112px;height:100px}.sidebar-meme b{display:block;font:700 24px 'Oswald'}.sidebar-meme p{font-size:12px;margin:3px 0}.sidebar-open,.sidebar-close{display:none}.workarea{min-width:0}.editorbar{height:52px;display:flex;align-items:stretch;justify-content:space-between;background:#f1f0ed;border-bottom:2px solid #111}.editor-left{display:flex}.file-tab{display:flex;align-items:center;gap:8px;padding:0 17px;background:#fff;border-right:2px solid #111;border-top:5px solid #e00023;font:600 15px 'Oswald'}.editor-controls{display:flex;padding-right:7px}.editor-controls button,.clearbtn{background:transparent;border:0;padding:8px;color:#111}.editor-controls button:hover,.clearbtn:hover{background:#ffe45b}.editorcontainer{height:460px;background:#17191e}.editortoolbar{min-height:65px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;background:#f9f4e7;border-top:2px solid #111;border-bottom:3px solid #111}.editorstats{font:500 14px 'Oswald';display:flex;gap:13px;flex-wrap:wrap}.toolbuttons{display:flex;gap:11px}.toolbuttons .comic-btn{padding:9px 13px;font-size:15px;box-shadow:3px 3px #111}.terminal-head{display:flex;align-items:center;justify-content:space-between;background:#ffde00;border-bottom:2px solid #111;min-height:47px}.terminal-tabs{display:flex;align-items:stretch;flex-wrap:wrap}.terminal-tabs button{border:0;border-right:2px solid #111;background:transparent;padding:10px 14px;display:flex;align-items:center;gap:7px;font:600 14px 'Oswald'}.terminal-tabs button.on{background:#181818;color:#ffdd00}.terminalbody,.csharpbody{height:250px;overflow:auto;background:#17191e;color:#f2f3f4;font:13px/1.6 'JetBrains Mono',monospace;padding:18px 19px}.log{display:flex;gap:11px;margin-bottom:8px}.log span{color:#ffda00}.log pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;min-width:0}.log-success{color:#b2f0aa}.log-error{color:#ff9c9c}.log-output{color:#fff}.csharpbar{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px solid #595959;padding-bottom:10px;font-size:12px}.csharpbar button{display:flex;gap:5px;align-items:center;background:#ffdf00;color:#111;border:1px solid #111;padding:4px 7px}.csharpbody pre{white-space:pre;overflow:auto;font:12px/1.6 'JetBrains Mono',monospace}.emptycsharp{padding:64px 0;text-align:center;color:#bbb}.inputbar{background:#f8f3e8;border-top:2px solid #111;padding:15px;display:flex;align-items:center;justify-content:space-between;gap:20px}.inputbar label{display:flex;flex-direction:column;font:500 16px 'Oswald';gap:3px}.inputbar small{font:700 12px 'Comic Neue'}.inputbar textarea{width:48%;max-width:450px;min-height:59px;padding:9px;border:2px solid #111;background:#fff;font:13px 'JetBrains Mono',monospace;resize:vertical}.ide-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;text-align:left;margin-top:22px;font-size:14px}.docs-section,.about-section{text-align:center}.docs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:45px}.doc-card{text-align:left;border:3px solid #111;box-shadow:5px 6px 0 #111;background:#fff;padding:18px 20px;min-height:180px;position:relative;overflow:hidden}.doc-card.highlight{background:#ffe25c}.doc-number{font-size:12px;display:block;margin-bottom:9px}.doc-card code{display:block;font:700 17px 'JetBrains Mono',monospace;word-break:break-all;position:relative;z-index:1}.doc-card b{font:600 19px 'Oswald';display:block;margin:7px 0}.doc-card p{max-width:75%;font-size:14px;margin:0}.doc-card img{position:absolute;width:103px;height:103px;object-fit:contain;right:-24px;bottom:-25px;opacity:.25;transform:rotate(-12deg)}.notice-panel{text-align:left;background:#ffdd00;border:3px solid #111;box-shadow:6px 6px 0 #111;padding:21px 26px;margin-top:40px}.notice-panel strong{font:600 26px 'Oswald'}.notice-panel p{margin:7px 0 0}.lore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;text-align:left;margin:40px 0 45px}.lore-box{background:#fff;border:3px solid #111;box-shadow:5px 6px 0 #111;padding:22px}.lore-box.yellow{background:#ffdb00}.lore-box.red{background:#d90023;color:#fff}.lore-box h3{font:500 29px 'Oswald';margin-bottom:10px}.lore-box p{font-size:15px;margin:0}.pipeline-heading{font:500 39px 'Oswald';text-align:left}.pipeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.pipeline-step{border:2px solid #111;background:#fff;box-shadow:3px 4px #111;padding:13px;text-align:left}.stepnum{display:inline-block;padding:3px 9px;background:#f9d500;border:2px solid #111;font:700 22px 'Oswald';margin-bottom:10px}.pipeline-step strong{display:block;font:600 19px 'Oswald'}.pipeline-step code{display:block;color:#d00022;font:600 12px 'JetBrains Mono';word-break:break-all}.pipeline-step p{font-size:13px;margin:9px 0}.footer{background:#161616;color:#fff;border-top:4px solid #111;padding:22px 28px}.footer>div{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}.footer b{font:500 26px 'Oswald';color:#ffdf00}.footer span{font:500 14px 'Oswald'}.footer span:last-child{display:flex;align-items:center;gap:9px}.footer img{width:45px;height:45px;filter:invert(1)}
-@media(max-width:1100px){.hero-corner{display:none}.poster-title{font-size:clamp(40px,8vw,90px)}.pipeline{grid-template-columns:repeat(3,minmax(0,1fr))}.navlinks{gap:2px}.navlinks button{padding:10px 7px;font-size:13px}}
-@media(max-width:850px){.navinner{padding:0 18px}.headerstamp{display:none}.menu-toggle{display:block}.navlinks{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:3px solid #111;flex-direction:column;align-items:stretch;padding:10px 20px}.navlinks.opened{display:flex}.navlinks button{text-align:left}.meme-gallery{grid-template-columns:repeat(2,minmax(0,1fr));max-width:640px}.ide{grid-template-columns:minmax(0,1fr)}.filespanel{display:none;position:absolute;z-index:10;width:min(300px,86vw);height:100%;box-shadow:8px 0 #111}.filespanel.opened{display:flex}.ide{position:relative}.sidebar-open,.sidebar-close{display:block;background:transparent;border:0;padding:8px}.sidebar-close{padding:0}.lore-grid{grid-template-columns:1fr}.docs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.hero{padding:25px 12px 40px}.hero h1{font-size:clamp(58px,15vw,87px);text-shadow:3px 3px 0 #111;letter-spacing:-2px}.hero-subtitle{font-size:15px;margin-bottom:30px}.est-stamp{font-size:11px}.meme-poster{min-height:195px;box-shadow:5px 6px #111}.poster-face{width:130px;height:130px}.poster-title{gap:5px;font-size:clamp(35px,10vw,57px);-webkit-text-stroke:1px #111;text-shadow:3px 3px #111}.poster-scribble{font-size:9px}.hero-cta{margin-top:44px}.comic-btn{padding:10px 12px;font-size:14px}.site-main{padding:0 15px}.gallery-section,.playground-section,.docs-section,.about-section{padding:50px 0}.comic-heading{font-size:39px}.section-description{font-size:14px}.meme-gallery{gap:15px;margin-top:30px}.meme-card{padding:8px;box-shadow:4px 5px #111}.meme-image{height:133px}.meme-image img{width:125px;height:125px}.meme-card strong{font-size:18px}.meme-card span{font-size:11px}.work-header{flex-direction:column;align-items:start}.server-label{font-size:11px}.editorcontainer{height:380px}.editortoolbar{flex-wrap:wrap}.editorstats{font-size:12px}.editorstats span:last-child{display:none}.toolbuttons{width:100%;justify-content:space-between}.toolbuttons .comic-btn{flex:1}.inputbar{flex-direction:column;align-items:stretch}.inputbar textarea{width:100%;max-width:none}.docs-grid{grid-template-columns:1fr}.pipeline{grid-template-columns:1fr}.footer>div{flex-wrap:wrap}.footer span:last-child{display:none}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Comic+Neue:wght@400;700&family=JetBrains+Mono:wght@400;600;700&family=Oswald:wght@400;500;600;700&display=swap");
+:root {
+  font-family: "Comic Neue", "Trebuchet MS", sans-serif;
+  color: #101010;
+  background: #faf8ef;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+html,
+body,
+#root {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100%;
+}
+button,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #e50022;
+  outline-offset: 4px;
+}
+p {
+  line-height: 1.55;
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+.app {
+  overflow: hidden;
+  min-height: 100vh;
+  background: #faf8ef;
+}
+.topbar {
+  position: relative;
+  z-index: 50;
+  background: #fff;
+  border-bottom: 3px solid #111;
+}
+.navinner {
+  max-width: 1420px;
+  padding: 0 32px;
+  min-height: 76px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  border: 0;
+  background: none;
+  padding: 0;
+  font:
+    700 27px "Oswald",
+    sans-serif;
+  letter-spacing: -1px;
+  color: #111;
+}
+.wordmark > img {
+  height: 48px;
+  width: 48px;
+}
+.wordmark span span {
+  color: #e00020;
+}
+.wordmark b {
+  color: #efcf00;
+}
+.navlinks {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.navlinks button {
+  border: 2px solid transparent;
+  background: transparent;
+  padding: 11px 12px;
+  font:
+    600 15px "Oswald",
+    sans-serif;
+  letter-spacing: 0.3px;
+}
+.navlinks button:hover,
+.navlinks button.chosen {
+  border-bottom-color: #d60020;
+}
+.headerstamp,
+.est-stamp,
+.section-label,
+.server-label,
+.ide-panel-label,
+.folder-label,
+.editorstats,
+.ide-foot,
+.doc-number {
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 1.2px;
+}
+.headerstamp {
+  font-size: 13px;
+  border: 2px solid #111;
+  padding: 7px 12px;
+  background: #ffdd00;
+  box-shadow: 3px 3px 0 #111;
+  transform: rotate(-3deg);
+  white-space: nowrap;
+}
+.headerstamp span {
+  color: #df0023;
+}
+.menu-toggle {
+  display: none;
+  border: 2px solid #111;
+  background: #ffdc00;
+  padding: 7px;
+}
+.graphpaper {
+  background-color: #faf8f1;
+  background-image:
+    linear-gradient(#dce5f0 1px, transparent 1px),
+    linear-gradient(90deg, #dce5f0 1px, transparent 1px);
+  background-size: 35px 35px;
+}
+.hero {
+  border-bottom: 3px solid #111;
+  text-align: center;
+  position: relative;
+  padding: 32px 18px 66px;
+}
+.hero-inner {
+  max-width: 1130px;
+  margin: auto;
+  position: relative;
+}
+.est-stamp {
+  display: inline-block;
+  background: #ffdf00;
+  color: #090909;
+  padding: 9px 16px;
+  border: 3px solid #111;
+  box-shadow: 5px 5px #111;
+  font-size: 16px;
+  transform: rotate(-3deg);
+  margin: 0 auto 26px;
+}
+.hero h1 {
+  font:
+    400 clamp(70px, 10vw, 150px)/0.92 "Oswald",
+    Impact,
+    sans-serif;
+  letter-spacing: -3px;
+  color: #ffdc00;
+  -webkit-text-stroke: 2.2px #111;
+  text-shadow: 5px 5px 0 #111;
+  margin: 10px 0 20px;
+}
+.hero h1 span {
+  color: #f8f7f3;
+}
+.hero-subtitle {
+  font:
+    700 clamp(16px, 1.6vw, 22px)/1.3 "Comic Neue",
+    cursive;
+  max-width: 790px;
+  margin: 0 auto 50px;
+  color: #111;
+}
+.hero-subtitle strong {
+  font-weight: 700;
+}
+.meme-poster {
+  margin: 0 auto;
+  max-width: 890px;
+  min-height: 330px;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  border: 4px solid #111;
+  box-shadow: 10px 11px 0 #111;
+  transform: rotate(-2deg);
+}
+.poster-faces {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  background: repeating-linear-gradient(-12deg, #fff 0 18px, #f2f2ee 19px 22px);
+}
+.poster-face {
+  height: 215px;
+  width: 215px;
+  object-fit: contain;
+  position: absolute;
+  filter: grayscale(1) contrast(1.3);
+}
+.face-0 {
+  left: -90px;
+  top: -20px;
+  transform: rotate(15deg);
+}
+.face-1 {
+  left: 9%;
+  bottom: -92px;
+  transform: rotate(-12deg);
+}
+.face-2 {
+  left: 26%;
+  top: -100px;
+  transform: rotate(10deg);
+}
+.face-3 {
+  left: 40%;
+  bottom: -95px;
+  transform: rotate(-8deg);
+}
+.face-4 {
+  left: 56%;
+  top: -100px;
+  transform: rotate(12deg);
+}
+.face-5 {
+  right: 2%;
+  bottom: -100px;
+  transform: rotate(-4deg);
+}
+.face-6 {
+  right: -85px;
+  top: -10px;
+  transform: rotate(-20deg);
+}
+.face-7 {
+  right: 21%;
+  bottom: -100px;
+  transform: rotate(-9deg);
+}
+.poster-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+  color: #df001e;
+  -webkit-text-stroke: 2px #111;
+  font:
+    700 clamp(44px, 7.7vw, 109px)/1 "Oswald",
+    Impact,
+    sans-serif;
+  letter-spacing: -2px;
+  text-shadow: 5px 6px 0 #111;
+  transform: rotate(-1deg);
+}
+.poster-title span {
+  color: #e00023;
+}
+.poster-scribble {
+  position: absolute;
+  right: 15px;
+  bottom: 8px;
+  background: #ffdc00;
+  border: 2px solid #111;
+  padding: 2px 8px;
+  font:
+    700 14px "Comic Neue",
+    sans-serif;
+  transform: rotate(5deg);
+}
+.hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 84px;
+}
+.comic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid #111;
+  border-radius: 0;
+  padding: 12px 19px;
+  font:
+    500 17px "Oswald",
+    sans-serif;
+  letter-spacing: 0.4px;
+  box-shadow: 4px 4px 0 #111;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+.comic-btn:not(:disabled):hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #111;
+}
+.comic-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px #111;
+}
+.comic-btn.red {
+  color: white;
+  background: #dc0022;
+}
+.comic-btn.yellow {
+  background: #ffde00;
+  color: #111;
+}
+.comic-btn.plain {
+  background: #fff;
+  color: #111;
+}
+.hero-corner {
+  position: absolute;
+  font: 700 19px "Comic Neue";
+  transform: rotate(-12deg);
+  color: #e00022;
+}
+.hero-corner.left {
+  left: 0;
+  top: 45%;
+}
+.hero-corner.right {
+  right: 0;
+  top: 55%;
+  transform: rotate(13deg);
+  color: #111;
+}
+.site-main {
+  max-width: 1280px;
+  margin: auto;
+  padding: 0 28px;
+}
+.gallery-section,
+.playground-section,
+.docs-section,
+.about-section {
+  padding: 72px 0 84px;
+  text-align: center;
+}
+.section-label {
+  display: inline-block;
+  background: #ffdf00;
+  padding: 7px 13px;
+  border: 2px solid #111;
+  font-size: 13px;
+  margin-bottom: 20px;
+  transform: rotate(-2deg);
+}
+.comic-heading {
+  font:
+    500 clamp(37px, 5vw, 65px)/1.1 "Oswald",
+    Impact,
+    sans-serif;
+  letter-spacing: 1px;
+  margin: 0 0 8px;
+}
+.comic-heading em {
+  font-style: normal;
+  color: #db0023;
+}
+.section-description {
+  font-size: 17px;
+  margin: 8px auto 34px;
+  max-width: 680px;
+}
+.meme-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  max-width: 930px;
+  margin: 42px auto 0;
+}
+.meme-card {
+  padding: 16px 16px 20px;
+  background: #fff;
+  border: 3px solid #111;
+  box-shadow: 6px 7px 0 #111;
+  transform: rotate(var(--tilt));
+  transition:
+    transform 0.18s,
+    box-shadow 0.18s;
+  min-width: 0;
+}
+.meme-card:hover {
+  transform: rotate(0) translateY(-7px);
+  box-shadow: 8px 12px 0 #111;
+}
+.meme-card.card-yellow {
+  background: #ffe25a;
+}
+.meme-card.card-red {
+  background: #e20023;
+  color: #fff;
+}
+.meme-image {
+  height: 185px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #222;
+}
+.meme-image img {
+  height: 175px;
+  width: 175px;
+  object-fit: contain;
+}
+.meme-divider {
+  height: 2px;
+  background: #111;
+  margin: 15px 0 8px;
+}
+.meme-card strong {
+  display: block;
+  font:
+    600 22px "Oswald",
+    sans-serif;
+}
+.meme-card span {
+  display: block;
+  font:
+    700 13px "Comic Neue",
+    sans-serif;
+}
+.playground-section {
+  border-top: 3px solid #111;
+  scroll-margin-top: 20px;
+}
+.work-header {
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+.work-header .section-label {
+  margin-bottom: 10px;
+}
+.work-header p {
+  margin: 8px 0 0;
+}
+.server-label {
+  white-space: nowrap;
+  padding: 9px 12px;
+  border: 2px solid #111;
+  background: #ffd800;
+  box-shadow: 3px 3px #111;
+  font-size: 13px;
+}
+.server-label.online {
+  background: #bcec95;
+}
+.server-label.offline {
+  background: #ffb7bd;
+}
+.ide {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr);
+  text-align: left;
+  background: #fff;
+  border: 3px solid #111;
+  box-shadow: 9px 9px 0 #111;
+  min-width: 0;
+}
+.filespanel {
+  background: #fff8e3;
+  border-right: 3px solid #111;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ide-panel-label {
+  background: #ffdd00;
+  border-bottom: 2px solid #111;
+  padding: 15px 13px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+.folder-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 19px 12px 10px;
+  font-size: 13px;
+}
+.fileitem {
+  width: 100%;
+  border: 0;
+  border-left: 5px solid transparent;
+  background: transparent;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 11px 10px;
+  color: #171717;
+  font: 600 15px "Oswald";
+  cursor: pointer;
+}
+.fileitem svg {
+  flex: 0 0 auto;
+  margin-top: 3px;
+}
+.fileitem span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.fileitem small {
+  font: 700 11px "Comic Neue";
+  display: block;
+  margin-top: 3px;
+  color: #60584e;
+}
+.fileitem:hover {
+  background: #fff;
+}
+.fileitem.selected {
+  background: #ffe770;
+  border-left-color: #dc0023;
+}
+.sidebar-meme {
+  margin-top: auto;
+  border-top: 2px dashed #111;
+  padding: 22px 13px 19px;
+  text-align: center;
+}
+.sidebar-meme img {
+  width: 112px;
+  height: 100px;
+}
+.sidebar-meme b {
+  display: block;
+  font: 700 24px "Oswald";
+}
+.sidebar-meme p {
+  font-size: 12px;
+  margin: 3px 0;
+}
+.sidebar-open,
+.sidebar-close {
+  display: none;
+}
+.workarea {
+  min-width: 0;
+}
+.editorbar {
+  height: 52px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  background: #f1f0ed;
+  border-bottom: 2px solid #111;
+}
+.editor-left {
+  display: flex;
+}
+.file-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 17px;
+  background: #fff;
+  border-right: 2px solid #111;
+  border-top: 5px solid #e00023;
+  font: 600 15px "Oswald";
+}
+.editor-controls {
+  display: flex;
+  padding-right: 7px;
+}
+.editor-controls button,
+.clearbtn {
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  color: #111;
+}
+.editor-controls button:hover,
+.clearbtn:hover {
+  background: #ffe45b;
+}
+.editorcontainer {
+  height: 460px;
+  background: #17191e;
+}
+.editortoolbar {
+  min-height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #f9f4e7;
+  border-top: 2px solid #111;
+  border-bottom: 3px solid #111;
+}
+.editorstats {
+  font: 500 14px "Oswald";
+  display: flex;
+  gap: 13px;
+  flex-wrap: wrap;
+}
+.toolbuttons {
+  display: flex;
+  gap: 11px;
+}
+.toolbuttons .comic-btn {
+  padding: 9px 13px;
+  font-size: 15px;
+  box-shadow: 3px 3px #111;
+}
+.terminal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffde00;
+  border-bottom: 2px solid #111;
+  min-height: 47px;
+}
+.terminal-tabs {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.terminal-tabs button {
+  border: 0;
+  border-right: 2px solid #111;
+  background: transparent;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 600 14px "Oswald";
+}
+.terminal-tabs button.on {
+  background: #181818;
+  color: #ffdd00;
+}
+.terminalbody,
+.csharpbody {
+  height: 250px;
+  overflow: auto;
+  background: #17191e;
+  color: #f2f3f4;
+  font:
+    13px/1.6 "JetBrains Mono",
+    monospace;
+  padding: 18px 19px;
+}
+.log {
+  display: flex;
+  gap: 11px;
+  margin-bottom: 8px;
+}
+.log span {
+  color: #ffda00;
+}
+.log pre {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  min-width: 0;
+}
+.log-success {
+  color: #b2f0aa;
+}
+.log-error {
+  color: #ff9c9c;
+}
+.log-output {
+  color: #fff;
+}
+.csharpbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  border-bottom: 1px solid #595959;
+  padding-bottom: 10px;
+  font-size: 12px;
+}
+.csharpbar button {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  background: #ffdf00;
+  color: #111;
+  border: 1px solid #111;
+  padding: 4px 7px;
+}
+.csharpbody pre {
+  white-space: pre;
+  overflow: auto;
+  font:
+    12px/1.6 "JetBrains Mono",
+    monospace;
+}
+.emptycsharp {
+  padding: 64px 0;
+  text-align: center;
+  color: #bbb;
+}
+.inputbar {
+  background: #f8f3e8;
+  border-top: 2px solid #111;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.inputbar label {
+  display: flex;
+  flex-direction: column;
+  font: 500 16px "Oswald";
+  gap: 3px;
+}
+.inputbar small {
+  font: 700 12px "Comic Neue";
+}
+.inputbar textarea {
+  width: 48%;
+  max-width: 450px;
+  min-height: 59px;
+  padding: 9px;
+  border: 2px solid #111;
+  background: #fff;
+  font:
+    13px "JetBrains Mono",
+    monospace;
+  resize: vertical;
+}
+.ide-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: left;
+  margin-top: 22px;
+  font-size: 14px;
+}
+.docs-section,
+.about-section {
+  text-align: center;
+}
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 45px;
+}
+.doc-card {
+  text-align: left;
+  border: 3px solid #111;
+  box-shadow: 5px 6px 0 #111;
+  background: #fff;
+  padding: 18px 20px;
+  min-height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+.doc-card.highlight {
+  background: #ffe25c;
+}
+.doc-number {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 9px;
+}
+.doc-card code {
+  display: block;
+  font:
+    700 17px "JetBrains Mono",
+    monospace;
+  word-break: break-all;
+  position: relative;
+  z-index: 1;
+}
+.doc-card b {
+  font: 600 19px "Oswald";
+  display: block;
+  margin: 7px 0;
+}
+.doc-card p {
+  max-width: 75%;
+  font-size: 14px;
+  margin: 0;
+}
+.doc-card img {
+  position: absolute;
+  width: 103px;
+  height: 103px;
+  object-fit: contain;
+  right: -24px;
+  bottom: -25px;
+  opacity: 0.25;
+  transform: rotate(-12deg);
+}
+.notice-panel {
+  text-align: left;
+  background: #ffdd00;
+  border: 3px solid #111;
+  box-shadow: 6px 6px 0 #111;
+  padding: 21px 26px;
+  margin-top: 40px;
+}
+.notice-panel strong {
+  font: 600 26px "Oswald";
+}
+.notice-panel p {
+  margin: 7px 0 0;
+}
+.lore-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  text-align: left;
+  margin: 40px 0 45px;
+}
+.lore-box {
+  background: #fff;
+  border: 3px solid #111;
+  box-shadow: 5px 6px 0 #111;
+  padding: 22px;
+}
+.lore-box.yellow {
+  background: #ffdb00;
+}
+.lore-box.red {
+  background: #d90023;
+  color: #fff;
+}
+.lore-box h3 {
+  font: 500 29px "Oswald";
+  margin-bottom: 10px;
+}
+.lore-box p {
+  font-size: 15px;
+  margin: 0;
+}
+.pipeline-heading {
+  font: 500 39px "Oswald";
+  text-align: left;
+}
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.pipeline-step {
+  border: 2px solid #111;
+  background: #fff;
+  box-shadow: 3px 4px #111;
+  padding: 13px;
+  text-align: left;
+}
+.stepnum {
+  display: inline-block;
+  padding: 3px 9px;
+  background: #f9d500;
+  border: 2px solid #111;
+  font: 700 22px "Oswald";
+  margin-bottom: 10px;
+}
+.pipeline-step strong {
+  display: block;
+  font: 600 19px "Oswald";
+}
+.pipeline-step code {
+  display: block;
+  color: #d00022;
+  font: 600 12px "JetBrains Mono";
+  word-break: break-all;
+}
+.pipeline-step p {
+  font-size: 13px;
+  margin: 9px 0;
+}
+.footer {
+  background: #161616;
+  color: #fff;
+  border-top: 4px solid #111;
+  padding: 22px 28px;
+}
+.footer > div {
+  max-width: 1280px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.footer b {
+  font: 500 26px "Oswald";
+  color: #ffdf00;
+}
+.footer span {
+  font: 500 14px "Oswald";
+}
+.footer span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.footer img {
+  width: 45px;
+  height: 45px;
+  filter: invert(1);
+}
+@media (max-width: 1100px) {
+  .hero-corner {
+    display: none;
+  }
+  .poster-title {
+    font-size: clamp(40px, 8vw, 90px);
+  }
+  .pipeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .navlinks {
+    gap: 2px;
+  }
+  .navlinks button {
+    padding: 10px 7px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 850px) {
+  .navinner {
+    padding: 0 18px;
+  }
+  .headerstamp {
+    display: none;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .navlinks {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 3px solid #111;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 20px;
+  }
+  .navlinks.opened {
+    display: flex;
+  }
+  .navlinks button {
+    text-align: left;
+  }
+  .meme-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 640px;
+  }
+  .ide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .filespanel {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width: min(300px, 86vw);
+    height: 100%;
+    box-shadow: 8px 0 #111;
+  }
+  .filespanel.opened {
+    display: flex;
+  }
+  .ide {
+    position: relative;
+  }
+  .sidebar-open,
+  .sidebar-close {
+    display: block;
+    background: transparent;
+    border: 0;
+    padding: 8px;
+  }
+  .sidebar-close {
+    padding: 0;
+  }
+  .lore-grid {
+    grid-template-columns: 1fr;
+  }
+  .docs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .hero {
+    padding: 25px 12px 40px;
+  }
+  .hero h1 {
+    font-size: clamp(58px, 15vw, 87px);
+    text-shadow: 3px 3px 0 #111;
+    letter-spacing: -2px;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+  .est-stamp {
+    font-size: 11px;
+  }
+  .meme-poster {
+    min-height: 195px;
+    box-shadow: 5px 6px #111;
+  }
+  .poster-face {
+    width: 130px;
+    height: 130px;
+  }
+  .poster-title {
+    gap: 5px;
+    font-size: clamp(35px, 10vw, 57px);
+    -webkit-text-stroke: 1px #111;
+    text-shadow: 3px 3px #111;
+  }
+  .poster-scribble {
+    font-size: 9px;
+  }
+  .hero-cta {
+    margin-top: 44px;
+  }
+  .comic-btn {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .site-main {
+    padding: 0 15px;
+  }
+  .gallery-section,
+  .playground-section,
+  .docs-section,
+  .about-section {
+    padding: 50px 0;
+  }
+  .comic-heading {
+    font-size: 39px;
+  }
+  .section-description {
+    font-size: 14px;
+  }
+  .meme-gallery {
+    gap: 15px;
+    margin-top: 30px;
+  }
+  .meme-card {
+    padding: 8px;
+    box-shadow: 4px 5px #111;
+  }
+  .meme-image {
+    height: 133px;
+  }
+  .meme-image img {
+    width: 125px;
+    height: 125px;
+  }
+  .meme-card strong {
+    font-size: 18px;
+  }
+  .meme-card span {
+    font-size: 11px;
+  }
+  .work-header {
+    flex-direction: column;
+    align-items: start;
+  }
+  .server-label {
+    font-size: 11px;
+  }
+  .editorcontainer {
+    height: 380px;
+  }
+  .editortoolbar {
+    flex-wrap: wrap;
+  }
+  .editorstats {
+    font-size: 12px;
+  }
+  .editorstats span:last-child {
+    display: none;
+  }
+  .toolbuttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .toolbuttons .comic-btn {
+    flex: 1;
+  }
+  .inputbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .inputbar textarea {
+    width: 100%;
+    max-width: none;
+  }
+  .docs-grid {
+    grid-template-columns: 1fr;
+  }
+  .pipeline {
+    grid-template-columns: 1fr;
+  }
+  .footer > div {
+    flex-wrap: wrap;
+  }
+  .footer span:last-child {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 /* === Rage Comics: extras laterais e vídeo da inspiração === */
-.hero, .gallery-section { isolation: isolate; }
-.hero-inner, .meme-gallery { z-index: 1; }
-.gallery-section { position: relative; }
-.side-memes { pointer-events: none; }
+.hero,
+.gallery-section {
+  isolation: isolate;
+}
+.hero-inner,
+.meme-gallery {
+  z-index: 1;
+}
+.gallery-section {
+  position: relative;
+}
+.side-memes {
+  pointer-events: none;
+}
 .side-meme {
   position: absolute;
   z-index: 0;
@@ -18,8 +1176,8 @@
   align-items: center;
   flex-direction: column;
   gap: 3px;
-  opacity: .93;
-  filter: drop-shadow(3px 4px 0 rgba(0,0,0,.14));
+  opacity: 0.93;
+  filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.14));
 }
 .side-meme img {
   max-width: 100%;
@@ -33,39 +1191,125 @@
   border: 2px solid #111;
   box-shadow: 3px 3px #111;
   padding: 3px 9px;
-  font: 600 15px "Oswald", sans-serif;
+  font:
+    600 15px "Oswald",
+    sans-serif;
   letter-spacing: 1px;
   transform: rotate(-5deg);
 }
-.side-meme.side-one { top: 365px; left: max(8px,calc(50% - 790px)); transform: rotate(-11deg); }
-.side-meme.side-two { top: 455px; right: max(8px,calc(50% - 790px)); transform: rotate(9deg); }
-.side-meme.side-three { top: 300px; left: -165px; transform: rotate(-8deg); }
-.side-meme.side-four { top: 315px; right: -165px; transform: rotate(8deg); }
-
-.rap-section { max-width: 760px; margin: 68px auto 0; position: relative; z-index: 2; }
-.rap-heading { display: flex; align-items: center; justify-content: center; gap: 9px; flex-wrap: wrap; margin-bottom: 15px; }
-.rap-heading span {
-  display: inline-block; padding: 6px 9px; border: 2px solid #111; background: #ffdf00;
-  transform: rotate(-3deg); font: 600 12px "Oswald", sans-serif;
+.side-meme.side-one {
+  top: 365px;
+  left: max(8px, calc(50% - 790px));
+  transform: rotate(-11deg);
 }
-.rap-heading b { font: 600 clamp(23px,3vw,34px) "Oswald", sans-serif; letter-spacing: 1px; }
-.rap-heading small { font: 600 12px "Oswald", sans-serif; color: #d90023; }
-.rap-video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #17191e; border: 4px solid #111; box-shadow: 7px 8px #111; }
-.rap-video iframe { width: 100%; height: 100%; border: none; display: block; }
-.rap-section p { font-size: 14px; margin: 16px 0 0; }
-.rap-section a { color: #cc0020; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-.hero-cta { margin-top: 46px; }
-.docs-section, .about-section, .playground-section { scroll-margin-top: 18px; }
+.side-meme.side-two {
+  top: 455px;
+  right: max(8px, calc(50% - 790px));
+  transform: rotate(9deg);
+}
+.side-meme.side-three {
+  top: 300px;
+  left: -165px;
+  transform: rotate(-8deg);
+}
+.side-meme.side-four {
+  top: 315px;
+  right: -165px;
+  transform: rotate(8deg);
+}
+
+.rap-section {
+  max-width: 760px;
+  margin: 68px auto 0;
+  position: relative;
+  z-index: 2;
+}
+.rap-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+.rap-heading span {
+  display: inline-block;
+  padding: 6px 9px;
+  border: 2px solid #111;
+  background: #ffdf00;
+  transform: rotate(-3deg);
+  font:
+    600 12px "Oswald",
+    sans-serif;
+}
+.rap-heading b {
+  font:
+    600 clamp(23px, 3vw, 34px) "Oswald",
+    sans-serif;
+  letter-spacing: 1px;
+}
+.rap-heading small {
+  font:
+    600 12px "Oswald",
+    sans-serif;
+  color: #d90023;
+}
+.rap-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #17191e;
+  border: 4px solid #111;
+  box-shadow: 7px 8px #111;
+}
+.rap-video iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.rap-section p {
+  font-size: 14px;
+  margin: 16px 0 0;
+}
+.rap-section a {
+  color: #cc0020;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.hero-cta {
+  margin-top: 46px;
+}
+.docs-section,
+.about-section,
+.playground-section {
+  scroll-margin-top: 18px;
+}
 
 @media (max-width: 1550px) {
-  .side-meme.side-three, .side-meme.side-four { display: none; }
+  .side-meme.side-three,
+  .side-meme.side-four {
+    display: none;
+  }
 }
 @media (max-width: 1380px) {
-  .side-memes-hero { display: none; }
+  .side-memes-hero {
+    display: none;
+  }
 }
 @media (max-width: 600px) {
-  .rap-section { margin-top: 46px; }
-  .rap-heading small { width: 100%; }
-  .rap-video { border-width: 3px; box-shadow: 4px 5px #111; }
-  .hero-cta { margin-top: 38px; }
+  .rap-section {
+    margin-top: 46px;
+  }
+  .rap-heading small {
+    width: 100%;
+  }
+  .rap-video {
+    border-width: 3px;
+    box-shadow: 4px 5px #111;
+  }
+  .hero-cta {
+    margin-top: 38px;
+  }
 }
