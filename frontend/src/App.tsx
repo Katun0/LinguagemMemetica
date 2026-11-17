@@ -1,178 +1,696 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type RefObject,
+} from "react";
 import Editor, { type OnMount } from "@monaco-editor/react";
 import {
-  createTheme,
-  ThemeProvider,
-  CssBaseline,
-  Tooltip,
-} from "@mui/material";
-import {
+  ArrowDown,
   ArrowRight,
-  BookOpen,
-  Braces,
-  Check,
   ChevronDown,
-  CircleAlert,
   Code2,
   Copy,
   Download,
-  ExternalLink,
   FileCode2,
-  Layers,
   Menu,
   Play,
   RotateCcw,
-  Sparkles,
-  SquareTerminal,
   Terminal,
-  WandSparkles,
   X,
-  Zap,
 } from "lucide-react";
 import { examples, keywords, type ExampleKey } from "./examples";
 
+type Page = "playground" | "docs" | "about";
+type Action = "compile" | "run";
+type Log = { type: "info" | "success" | "error" | "output"; content: string };
 type Result = {
   ok: boolean;
   csharp?: string;
   output?: string;
   tokens?: number;
   steps?: number;
-  message?: string;
   error?: string;
   stage?: string;
 };
-type Log = { type: "info" | "success" | "error" | "output"; content: string };
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: { main: "#ad8aff" },
-    background: { default: "#090c13", paper: "#111622" },
+const API = (import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "");
+const FACES = [
+  {
+    name: "Trollface",
+    file: "trollface",
+    caption: "Problem?",
+    color: "yellow",
   },
-  typography: { fontFamily: "DM Sans, sans-serif" },
-  shape: { borderRadius: 12 },
-});
-const API = import.meta.env.VITE_API_URL?.replace(/\/$/, "") ?? "";
-
-const memeTicker = [
-  "TROLLFACE MODE: ON",
-  "MUITO CÓDIGO • MUITO MEME",
-  "IT'S OVER 9000!",
-  "RageLang Playground",
-  "Forever Alone loop detected",
-  "Derp approved",
-  "Compiled with memes",
-  "FACEBOOK MEME ENERGY",
-  "Y2K INTERNET VIBES",
+  { name: "Me Gusta", file: "megusta", caption: "Me gusta", color: "white" },
+  { name: "Rage Guy", file: "rage", caption: "FFFFUUUU!", color: "red" },
+  { name: "Derp", file: "derp", caption: "Herp derp", color: "white" },
+  {
+    name: "Forever Alone",
+    file: "forever",
+    caption: "Forever... alone.",
+    color: "yellow",
+  },
+  { name: "Okay Guy", file: "okay", caption: "...okay.", color: "white" },
 ];
 
-const memeStickers = [
-  "TROLLFACE",
-  "FOREVER ALONE",
-  "ME GUSTA",
-  "NOT BAD",
-  "DERP",
-  "I LIED",
-  "Y U NO CODE?",
-  "LOL INTERNET",
-];
-
-function Logo() {
+function Face({ name, className = "" }: { name: string; className?: string }) {
   return (
-    <div className="brand">
-      <div className="brandicon">
-        R<span>!</span>
-      </div>
-      <span>
-        rage<span className="brandlight">lang</span>
-        <span className="brandperiod">.</span>
-      </span>
-    </div>
+    <img
+      className={className}
+      src={`/memes/${name}.svg`}
+      alt={`Rosto ilustrado no estilo Rage Comics: ${name}`}
+      draggable={false}
+    />
   );
 }
 
-function MemeTicker() {
+function Header({
+  page,
+  setPage,
+  onGo,
+}: {
+  page: Page;
+  setPage: (p: Page) => void;
+  onGo: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const choose = (p: Page) => {
+    setPage(p);
+    setOpen(false);
+    if (p === "playground") onGo();
+  };
   return (
-    <div className="meme-ticker">
-      <div className="meme-ticker-track">
-        {[...memeTicker, ...memeTicker].map((item, index) => (
-          <span key={`${item}-${index}`} className="meme-ticker-item">
-            ★ {item}
+    <header className="topbar">
+      <div className="navinner">
+        <button
+          className="wordmark"
+          onClick={() => choose("playground")}
+          aria-label="RageLang início"
+        >
+          <Face name="trollface" />{" "}
+          <span>
+            RAGE<span>LANG</span>
+            <b>!</b>
           </span>
+        </button>
+        <nav
+          className={open ? "navlinks opened" : "navlinks"}
+          aria-label="Navegação principal"
+        >
+          <button
+            className={page === "playground" ? "chosen" : ""}
+            onClick={() => choose("playground")}
+          >
+            PLAYGROUND
+          </button>
+          <button
+            className={page === "docs" ? "chosen" : ""}
+            onClick={() => choose("docs")}
+          >
+            DICIONÁRIO MEME
+          </button>
+          <button
+            className={page === "about" ? "chosen" : ""}
+            onClick={() => choose("about")}
+          >
+            SOBRE O PROJETO
+          </button>
+        </nav>
+        <div className="headerstamp">
+          EST. 2008 <span>★</span> v1.0
+        </div>
+        <button
+          className="menu-toggle"
+          aria-label="Abrir menu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? <X /> : <Menu />}
+        </button>
+      </div>
+    </header>
+  );
+}
+
+function Hero({
+  onStart,
+  onDocs,
+}: {
+  onStart: () => void;
+  onDocs: () => void;
+}) {
+  return (
+    <section className="hero graphpaper" id="top">
+      <div className="hero-inner">
+        <div className="est-stamp">EST. 2008 • 4CHAN /B/ • FACEBOOK MEMES</div>
+        <h1>
+          RAGE<span>LANG</span>
+        </h1>
+        <p className="hero-subtitle">
+          A linguagem de programação que nasceu dos memes.
+          <br />
+          Trollface. Me Gusta. Forever Alone.{" "}
+          <strong>O código mais nostálgico da internet.</strong>
+        </p>
+        <div
+          className="meme-poster"
+          role="img"
+          aria-label="Colagem ilustrada de rostos clássicos no estilo Rage Comics"
+        >
+          <div className="poster-faces">
+            {[
+              "rage",
+              "derp",
+              "megusta",
+              "forever",
+              "okay",
+              "trollface",
+              "derp",
+              "rage",
+            ].map((n, i) => (
+              <Face name={n} key={i} className={`poster-face face-${i}`} />
+            ))}
+          </div>
+          <div className="poster-title">
+            RAGE<span>COMICS</span>
+          </div>
+          <div className="poster-scribble">PROBLEM? ☺</div>
+        </div>
+        <div className="hero-cta">
+          <button className="comic-btn red" onClick={onStart}>
+            PROGRAMAR AGORA <ArrowDown size={17} />
+          </button>
+          <button className="comic-btn plain" onClick={onDocs}>
+            CONHECER OS MEMES <ArrowRight size={17} />
+          </button>
+        </div>
+        <div className="hero-corner left">
+          U MAD
+          <br />
+          BRO?
+        </div>
+        <div className="hero-corner right">
+          EPIC
+          <br />
+          WIN!
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MemeGallery() {
+  return (
+    <section className="gallery-section" aria-labelledby="gallery-title">
+      <div className="section-label">THE ORIGINAL GANG — CIRCA 2008</div>
+      <h2 id="gallery-title" className="comic-heading">
+        OS ROSTOS DA <em>RAGELANG</em>
+      </h2>
+      <p className="section-description">
+        Antes dos reels, antes dos trends... eles já dominavam a internet.
+      </p>
+      <div className="meme-gallery">
+        {FACES.map((m, i) => (
+          <article
+            className={`meme-card card-${m.color}`}
+            key={m.name}
+            style={
+              { "--tilt": `${[-2, 2, -1, 2, -2, 1][i]}deg` } as CSSProperties
+            }
+          >
+            <div className="meme-image">
+              <Face name={m.file} />
+            </div>
+            <div className="meme-divider" />
+            <strong>{m.name}</strong>
+            <span>“{m.caption}”</span>
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
-function StickerCloud() {
+function Playground({
+  service,
+  source,
+  setSource,
+  active,
+  selectExample,
+  inputs,
+  setInputs,
+  result,
+  logs,
+  busy,
+  action,
+  mode,
+  setMode,
+  bottomRef,
+  onMount,
+}: {
+  service: "checking" | "online" | "offline";
+  source: string;
+  setSource: (s: string) => void;
+  active: ExampleKey;
+  selectExample: (key: ExampleKey) => void;
+  inputs: string;
+  setInputs: (s: string) => void;
+  result: Result | null;
+  logs: Log[];
+  busy: boolean;
+  action: (a: Action) => void;
+  mode: "console" | "csharp";
+  setMode: (m: "console" | "csharp") => void;
+  bottomRef: RefObject<HTMLDivElement | null>;
+  onMount: OnMount;
+}) {
+  const [sidebar, setSidebar] = useState(false);
+  const [localLogs, setLocalLogs] = useState<Log[] | null>(null);
+  useEffect(() => setLocalLogs(null), [logs]);
+  const shownLogs = localLogs ?? logs;
+  const lines = useMemo(() => source.split("\n").length, [source]);
+  const saveSource = () => {
+    const url = URL.createObjectURL(new Blob([source], { type: "text/plain" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "main.rage";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+  };
   return (
-    <div className="sticker-cloud" aria-hidden="true">
-      {memeStickers.map((item, index) => (
-        <span
-          key={item}
-          className={`sticker sticker-${(index % 4) + 1}`}
-          style={{
-            left: `${8 + index * 10}%`,
-            top: `${(index % 2) * 18 + 4}%`,
-          }}
-        >
-          {item}
-        </span>
-      ))}
-    </div>
+    <section className="playground-section" id="workspace">
+      <div className="work-header">
+        <div>
+          <div className="section-label">YOUR OWN MEME LABORATORY</div>
+          <h2 className="comic-heading">
+            O LABORATÓRIO <em>MEMÉTICO</em>
+          </h2>
+          <p>
+            Escreva RageLang, compile para C# e execute direto no playground.
+          </p>
+        </div>
+        <div className={`server-label ${service}`}>
+          ●{" "}
+          {service === "online"
+            ? "COMPILADOR ONLINE"
+            : service === "offline"
+              ? "BACKEND DESCONECTADO"
+              : "CONECTANDO..."}
+        </div>
+      </div>
+      <div className="ide">
+        <aside className={`filespanel ${sidebar ? "opened" : ""}`}>
+          <div className="ide-panel-label">
+            <span>☰ ARQUIVOS .RAGE</span>
+            <button className="sidebar-close" onClick={() => setSidebar(false)}>
+              <X size={18} />
+            </button>
+          </div>
+          <div className="folder-label">
+            <ChevronDown size={16} /> EXEMPLOS CLÁSSICOS
+          </div>
+          {Object.keys(examples).map((k) => (
+            <button
+              className={`fileitem ${active === k ? "selected" : ""}`}
+              key={k}
+              onClick={() => {
+                selectExample(k as ExampleKey);
+                setSidebar(false);
+              }}
+            >
+              <FileCode2 size={16} />
+              <span>
+                {k}.rage<small>{examples[k as ExampleKey].detail}</small>
+              </span>
+            </button>
+          ))}
+          <div className="sidebar-meme">
+            <Face name="trollface" />
+            <b>PROBLEM?</b>
+            <p>Escolha um exemplo ou escreva seu próprio meme!</p>
+          </div>
+        </aside>
+        <div className="workarea">
+          <div className="editorbar">
+            <div className="editor-left">
+              <button
+                className="sidebar-open"
+                aria-label="Abrir exemplos"
+                onClick={() => setSidebar(true)}
+              >
+                <Menu size={18} />
+              </button>
+              <span className="file-tab">
+                <FileCode2 size={15} /> main.rage
+              </span>
+            </div>
+            <div className="editor-controls">
+              <button
+                title="Restaurar exemplo"
+                aria-label="Restaurar exemplo"
+                onClick={() => setSource(examples[active].code)}
+              >
+                <RotateCcw size={16} />
+              </button>
+              <button
+                title="Copiar código"
+                aria-label="Copiar código"
+                onClick={() => void navigator.clipboard.writeText(source)}
+              >
+                <Copy size={16} />
+              </button>
+              <button
+                title="Baixar arquivo .rage"
+                aria-label="Baixar arquivo"
+                onClick={saveSource}
+              >
+                <Download size={16} />
+              </button>
+            </div>
+          </div>
+          <div className="editorcontainer">
+            <Editor
+              height="100%"
+              language="ragelang"
+              theme="comic"
+              value={source}
+              onChange={(v) => setSource(v ?? "")}
+              onMount={onMount}
+              options={{
+                fontSize: 14,
+                fontFamily: '"JetBrains Mono", Consolas, monospace',
+                minimap: { enabled: false },
+                scrollBeyondLastLine: false,
+                wordWrap: "on",
+                automaticLayout: true,
+                lineNumbersMinChars: 3,
+                folding: true,
+                padding: { top: 18, bottom: 18 },
+                tabSize: 4,
+              }}
+            />
+          </div>
+          <div className="editortoolbar">
+            <div className="editorstats">
+              {lines} linhas <span>• UTF-8</span> <span>• RAGELANG</span>
+            </div>
+            <div className="toolbuttons">
+              <button
+                className="comic-btn yellow"
+                disabled={busy || service === "offline"}
+                onClick={() => action("compile")}
+              >
+                <Code2 size={17} /> COMPILAR
+              </button>
+              <button
+                className="comic-btn red"
+                id="run-button"
+                disabled={busy || service === "offline"}
+                onClick={() => action("run")}
+              >
+                <Play size={16} fill="currentColor" />{" "}
+                {busy ? "PROCESSANDO..." : "EXECUTAR"}
+              </button>
+            </div>
+          </div>
+          <div className="terminal-head">
+            <div className="terminal-tabs">
+              <button
+                className={mode === "console" ? "on" : ""}
+                onClick={() => setMode("console")}
+              >
+                <Terminal size={16} /> TERMINAL
+              </button>
+              <button
+                className={mode === "csharp" ? "on" : ""}
+                onClick={() => setMode("csharp")}
+              >
+                <Code2 size={16} /> C# GERADO
+              </button>
+            </div>
+            <button
+              className="clearbtn"
+              title="Limpar terminal"
+              onClick={() => {
+                setLocalLogs([
+                  {
+                    type: "info",
+                    content: "Terminal limpo. Pronto para compilar.",
+                  },
+                ]);
+                setMode("console");
+              }}
+            >
+              <RotateCcw size={15} />
+            </button>
+          </div>
+          {mode === "console" ? (
+            <div className="terminalbody">
+              {shownLogs.map((l, i) => (
+                <div className={`log log-${l.type}`} key={i}>
+                  <span>
+                    {l.type === "success"
+                      ? "✔"
+                      : l.type === "error"
+                        ? "✖"
+                        : ">"}
+                  </span>
+                  <pre>{l.content}</pre>
+                </div>
+              ))}
+              <div ref={bottomRef} />
+            </div>
+          ) : (
+            <div className="csharpbody">
+              {result?.csharp ? (
+                <>
+                  <div className="csharpbar">
+                    <span>Programa.cs — traduzido pelo Python</span>
+                    <button
+                      onClick={() =>
+                        void navigator.clipboard.writeText(result.csharp ?? "")
+                      }
+                    >
+                      <Copy size={14} /> COPIAR
+                    </button>
+                  </div>
+                  <pre>{result.csharp}</pre>
+                </>
+              ) : (
+                <div className="emptycsharp">
+                  Clique em COMPILAR para gerar o código C#.
+                </div>
+              )}
+            </div>
+          )}
+          <div className="inputbar">
+            <label htmlFor="program-input">
+              <b>ENTRADA DO PROGRAMA</b>
+              <small>Uma entrada por linha para ASK_ME_ANYTHING</small>
+            </label>
+            <textarea
+              id="program-input"
+              value={inputs}
+              onChange={(e) => setInputs(e.target.value)}
+              rows={2}
+              placeholder="Ex.: 9001"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="ide-foot">
+        <span>★ DICA: CTRL + ENTER PARA EXECUTAR</span>
+        <span>RAGELANG → PYTHON AST → C#</span>
+      </div>
+    </section>
+  );
+}
+
+function Docs() {
+  return (
+    <section className="docs-section" id="docs">
+      <div className="section-label">THE RAGE LANGUAGE DICTIONARY</div>
+      <h2 className="comic-heading">
+        O DICIONÁRIO DOS <em>MEMES</em>
+      </h2>
+      <p className="section-description">
+        Cada palavra-chave tem uma história, um meme e uma função.
+      </p>
+      <div className="docs-grid">
+        {keywords.map(([rage, normal, desc], i) => (
+          <article
+            className={`doc-card ${i % 4 === 0 ? "highlight" : ""}`}
+            key={rage}
+          >
+            <span className="doc-number">
+              #{String(i + 1).padStart(2, "0")}
+            </span>
+            <code>{rage}</code>
+            <b>→ {normal}</b>
+            <p>{desc}</p>
+            <Face name={FACES[i % FACES.length].file} />
+          </article>
+        ))}
+      </div>
+      <div className="notice-panel">
+        <strong>COMO ESCREVER RAGELANG?</strong>
+        <p>
+          Use POKER_FACE para variáveis, DERP para condições, FOREVER_ALONE para
+          repetições e CEREAL_GUY para imprimir. Cada instrução termina em ponto
+          e vírgula. Funções e listas ainda não foram implementadas.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function About() {
+  const stages = [
+    [
+      "01",
+      "LEXER",
+      "lexer.py",
+      "Reconhece palavras-chave e transforma código em tokens.",
+    ],
+    [
+      "02",
+      "PARSER",
+      "parser.py",
+      "Verifica a gramática e monta a árvore sintática AST.",
+    ],
+    [
+      "03",
+      "SEMÂNTICA",
+      "compiler.py",
+      "Confere tipos de dados, constantes e escopos.",
+    ],
+    [
+      "04",
+      "GERADOR C#",
+      "compiler.py",
+      "Traduz a AST para um arquivo C# válido.",
+    ],
+    [
+      "05",
+      "RUNNER",
+      "runner.py",
+      "Executa a AST em modo didático com limites de execução.",
+    ],
+  ];
+  return (
+    <section className="about-section">
+      <div className="section-label">THE LORE BEHIND THE CODE</div>
+      <h2 className="comic-heading">
+        COMO NASCEU A <em>RAGELANG?</em>
+      </h2>
+      <div className="lore-grid">
+        <article className="lore-box yellow">
+          <h3>A IDEIA</h3>
+          <p>
+            Inspirada nos Rage Comics que marcaram a internet dos anos 2000 e
+            2010 e na nostalgia do “Rap dos Memes”, a RageLang traduz conceitos
+            de programação em nomes como TROLLFACE, DERP e FOREVER_ALONE.
+          </p>
+        </article>
+        <article className="lore-box">
+          <h3>A LINGUAGEM</h3>
+          <p>
+            Um projeto acadêmico construído em Python. O frontend usa React e
+            TypeScript, enquanto o compilador passa por análise léxica,
+            sintática, semântica e geração de código C#.
+          </p>
+        </article>
+        <article className="lore-box red">
+          <h3>O OBJETIVO</h3>
+          <p>
+            Entender de verdade como um compilador funciona e transformar isso
+            em uma experiência divertida, educativa e memorável.
+          </p>
+        </article>
+      </div>
+      <h3 className="pipeline-heading">FROM MEME TO MACHINE</h3>
+      <div className="pipeline">
+        {stages.map(([n, title, file, desc]) => (
+          <div className="pipeline-step" key={n}>
+            <span className="stepnum">{n}</span>
+            <div>
+              <strong>{title}</strong>
+              <code>{file}</code>
+              <p>{desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="notice-panel">
+        <strong>COMPILAR ≠ EXECUTAR</strong>
+        <p>
+          Compilar produz C# a partir do código RageLang. Executar usa um
+          interpretador didático da AST no backend Python — não executa o C# no
+          servidor.
+        </p>
+      </div>
+    </section>
   );
 }
 
 export default function App() {
-  const [tab, setTab] = useState<"playground" | "docs" | "about">("playground");
+  const [page, setPage] = useState<Page>("playground");
   const [active, setActive] = useState<ExampleKey>("poder");
   const [source, setSource] = useState<string>(examples.poder.code);
   const [inputs, setInputs] = useState("");
   const [mode, setMode] = useState<"console" | "csharp">("console");
   const [result, setResult] = useState<Result | null>(null);
   const [logs, setLogs] = useState<Log[]>([
-    { type: "info", content: "RageLang Terminal v1.0.0" },
-    { type: "info", content: "Inicializando memes..." },
-    { type: "success", content: "Trollface carregado com sucesso." },
-    {
-      type: "info",
-      content: "Pronto para compilar. Pressione ▶ Executar ou Ctrl+Enter.",
-    },
+    { type: "info", content: "RageLang Terminal v1.0 • 2008 Edition" },
+    { type: "info", content: "Trollface carregado. PROBLEM?" },
+    { type: "info", content: "Pronto. Pressione EXECUTAR ou Ctrl + Enter." },
   ]);
   const [busy, setBusy] = useState(false);
-  const [sidebar, setSidebar] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
   const [service, setService] = useState<"checking" | "online" | "offline">(
     "checking",
   );
-  const editorRef = useRef<Parameters<OnMount>[0] | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
+    let cancelled = false;
     fetch(`${API}/api/health`)
       .then((r) => {
         if (!r.ok) throw Error();
-        setService("online");
+        if (!cancelled) setService("online");
       })
-      .catch(() => setService("offline"));
+      .catch(() => {
+        if (!cancelled) setService("offline");
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [logs]);
-  function selectExample(key: ExampleKey) {
-    setActive(key);
-    setSource(examples[key].code);
+  function scrollToWorkspace() {
+    setPage("playground");
+    requestAnimationFrame(() =>
+      setTimeout(
+        () =>
+          document
+            .getElementById("workspace")
+            ?.scrollIntoView({ behavior: "smooth" }),
+        0,
+      ),
+    );
+  }
+  function selectExample(k: ExampleKey) {
+    setActive(k);
+    setSource(examples[k].code);
     setResult(null);
-    setSidebar(false);
-    setTab("playground");
+    setMode("console");
     setLogs([
-      { type: "info", content: `Exemplo carregado: ${examples[key].name}` },
-      {
-        type: "info",
-        content: "Clique em Compilar ou Executar para continuar.",
-      },
+      { type: "info", content: `Exemplo carregado: ${examples[k].name}` },
+      { type: "info", content: "Pressione COMPILAR ou EXECUTAR." },
     ]);
   }
-  async function submit(action: "compile" | "run") {
+  async function submit(action: Action) {
     if (busy) return;
     setBusy(true);
     setMode("console");
@@ -181,16 +699,16 @@ export default function App() {
         type: "info",
         content: `$ ragelang ${action === "compile" ? "--compile" : "--run"} main.rage`,
       },
-      { type: "info", content: "Analisando tokens, sintaxe e semântica..." },
+      { type: "info", content: "Analisando código RageLang..." },
     ]);
     try {
-      const resp = await fetch(`${API}/api/${action}`, {
+      const response = await fetch(`${API}/api/${action}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ source, inputs }),
       });
-      if (!resp.ok) throw Error(`Servidor retornou HTTP ${resp.status}`);
-      const data: Result = await resp.json();
+      if (!response.ok) throw Error(`HTTP ${response.status}`);
+      const data: Result = await response.json();
       setResult(data);
       if (!data.ok) {
         setLogs((prev) => [
@@ -206,35 +724,31 @@ export default function App() {
         ...prev,
         {
           type: "success",
-          content: `✓ Análise concluída · ${data.tokens || 0} tokens`,
+          content: `Análise concluída · ${data.tokens ?? 0} tokens`,
         },
-        { type: "success", content: "✓ C# gerado com sucesso" },
+        { type: "success", content: "Código C# gerado com sucesso" },
         ...(action === "run"
           ? [
-              { type: "info" as const, content: "── Saída do programa ──" },
+              { type: "info" as const, content: "── SAÍDA DO PROGRAMA ──" },
               {
                 type: "output" as const,
                 content: data.output || "(Nenhuma saída)",
               },
               {
                 type: "success" as const,
-                content: `Processo finalizado · ${data.steps || 0} passos`,
+                content: `Fim · ${data.steps ?? 0} passos`,
               },
             ]
-          : [
-              {
-                type: "info" as const,
-                content: "Abra a aba Código C# para ver o resultado.",
-              },
-            ]),
+          : [{ type: "info" as const, content: "Confira a aba C# GERADO." }]),
       ]);
       if (action === "compile") setMode("csharp");
-    } catch (err) {
+      setService("online");
+    } catch (e) {
       setLogs((prev) => [
         ...prev,
         {
           type: "error",
-          content: `Falha de conexão: ${err instanceof Error ? err.message : String(err)}. Inicie o backend Python na porta 8000.`,
+          content: `Falha de conexão: ${e instanceof Error ? e.message : String(e)}. Verifique o backend Python na porta 8000.`,
         },
       ]);
       setService("offline");
@@ -242,16 +756,11 @@ export default function App() {
       setBusy(false);
     }
   }
-  const lines = useMemo(() => source.split("\n").length, [source]);
-  function handleEditorMount(
-    editor: Parameters<OnMount>[0],
-    monaco: Parameters<OnMount>[1],
-  ) {
-    editorRef.current = editor;
+  const handleMount: OnMount = (editor, monaco) => {
     if (
       !monaco.languages
         .getLanguages()
-        .some((x: { id: string }) => x.id === "ragelang")
+        .some((l: { id: string }) => l.id === "ragelang")
     ) {
       monaco.languages.register({ id: "ragelang" });
       monaco.languages.setMonarchTokensProvider("ragelang", {
@@ -275,577 +784,73 @@ export default function App() {
           ],
         },
       });
-      monaco.editor.defineTheme("rage", {
-        base: "vs-dark",
-        inherit: true,
-        rules: [
-          { token: "keyword", foreground: "C59AFF", fontStyle: "bold" },
-          { token: "type", foreground: "5ECCD6" },
-          { token: "constant", foreground: "F7B96A" },
-          { token: "string", foreground: "A1DAA1" },
-          { token: "comment", foreground: "627088", fontStyle: "italic" },
-          { token: "number", foreground: "F1B176" },
-          { token: "operator", foreground: "D2D8E3" },
-        ],
-        colors: {
-          "editor.background": "#101521",
-          "editor.foreground": "#DCE4F3",
-          "editorLineNumber.foreground": "#48536A",
-          "editorLineNumber.activeForeground": "#A0ACBF",
-          "editor.selectionBackground": "#7455C755",
-          "editor.lineHighlightBackground": "#ffffff05",
-          "editorCursor.foreground": "#B99AFF",
-          "editorIndentGuide.background1": "#283040",
-        },
-      });
     }
-    monaco.editor.setTheme("rage");
-    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
-      document.getElementById("run-button")?.click();
+    monaco.editor.defineTheme("comic", {
+      base: "vs-dark",
+      inherit: true,
+      rules: [
+        { token: "keyword", foreground: "FFCC00", fontStyle: "bold" },
+        { token: "type", foreground: "77D7EB" },
+        { token: "constant", foreground: "FF7575" },
+        { token: "string", foreground: "A3E7A3" },
+        { token: "comment", foreground: "818D99", fontStyle: "italic" },
+        { token: "number", foreground: "F9B86D" },
+      ],
+      colors: {
+        "editor.background": "#17191E",
+        "editor.foreground": "#FFFFFF",
+        "editorLineNumber.foreground": "#777A81",
+        "editorCursor.foreground": "#FFDB00",
+        "editor.selectionBackground": "#82691A99",
+        "editor.lineHighlightBackground": "#FFFFFF0B",
+      },
     });
-  }
-  const apiReady = service !== "offline";
+    monaco.editor.setTheme("comic");
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () =>
+      document.getElementById("run-button")?.click(),
+    );
+  };
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className="app">
-        <div className="ambient ambient-one" />
-        <div className="ambient ambient-two" />
-        <header className="topbar">
-          <div className="topbarinner">
-            <Logo />
-            <nav className="mainnav">
-              <button
-                className={tab === "playground" ? "navactive" : ""}
-                onClick={() => setTab("playground")}
-              >
-                <SquareTerminal size={16} /> Playground
-              </button>
-              <button
-                className={tab === "docs" ? "navactive" : ""}
-                onClick={() => setTab("docs")}
-              >
-                <BookOpen size={16} /> Documentação
-              </button>
-              <button
-                className={tab === "about" ? "navactive" : ""}
-                onClick={() => setTab("about")}
-              >
-                <Layers size={16} /> Sobre o projeto
-              </button>
-            </nav>
-            <div className="headerright">
-              <div className="release">
-                <span className="releaselight" /> v1.0.0
-              </div>
-              <button
-                className="mobiletoggle"
-                onClick={() => setMobileMenu(!mobileMenu)}
-                aria-label="Menu"
-              >
-                <Menu size={21} />
-              </button>
-            </div>
-          </div>
-          {mobileMenu && (
-            <div className="mobilemenu">
-              <button
-                onClick={() => {
-                  setTab("playground");
-                  setMobileMenu(false);
-                }}
-              >
-                Playground
-              </button>
-              <button
-                onClick={() => {
-                  setTab("docs");
-                  setMobileMenu(false);
-                }}
-              >
-                Documentação
-              </button>
-              <button
-                onClick={() => {
-                  setTab("about");
-                  setMobileMenu(false);
-                }}
-              >
-                Sobre o projeto
-              </button>
-            </div>
-          )}
-        </header>
-
-        <MemeTicker />
-
-        <main className="main">
-          <div className="hero">
-            <StickerCloud />
-            <div className="eyebrow">
-              <Sparkles size={14} /> A LINGUAGEM MAIS MEMÉTICA DA INTERNET{" "}
-              <span className="eyeline" />
-            </div>
-            <h1 className="hero-title">
-              Code like a <span>meme.</span>
-              <br />
-              Compile like a <span className="gradienttext">legend.</span>
-            </h1>
-            <p className="hero-copy">
-              Aprenda, escreva e execute RageLang direto do navegador. Uma
-              linguagem inspirada nos memes clássicos da internet, com energia
-              de Facebook antigo, Rage Comics e caos Y2K.
-            </p>
-            <div className="heroactions">
-              <div className="meme-badges">
-                <span className="meme-badge">2000s Web</span>
-                <span className="meme-badge">Rage Comics</span>
-                <span className="meme-badge">Facebook Meme Core</span>
-                <span className="meme-badge">Derp Certified</span>
-              </div>
-              <button
-                className="primarybtn"
-                onClick={() => {
-                  setTab("playground");
-                  document
-                    .getElementById("workspace")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                <Zap size={17} fill="currentColor" /> Começar a programar{" "}
-                <ArrowRight size={17} />
-              </button>
-              <button className="ghostbtn" onClick={() => setTab("docs")}>
-                <BookOpen size={17} /> Ver documentação
-              </button>
-            </div>
-            <div className="herochips">
-              <span>
-                <Check size={14} /> Compilador real em Python
-              </span>
-              <span>
-                <Check size={14} /> Transpilação para C#
-              </span>
-              <span>
-                <Check size={14} /> Grátis e open source
-              </span>
-            </div>
-          </div>
-          {tab === "playground" ? (
-            <section id="workspace" className="workspace">
-              <div className="sectionheading">
-                <div>
-                  <div className="sectioneyebrow">
-                    <span className="liveicon" /> LIVE PLAYGROUND
-                  </div>
-                  <h2>
-                    Seu laboratório de memes<span>.</span>
-                  </h2>
-                  <p>
-                    Experimente exemplos, escreva seu código e veja a mágica
-                    acontecer.
-                  </p>
-                </div>
-                <div className={`status ${service}`}>
-                  <span className="statusdot" />
-                  {service === "online"
-                    ? "Compilador online"
-                    : service === "offline"
-                      ? "Backend desconectado"
-                      : "Conectando..."}
-                </div>
-              </div>
-              <div className="ide">
-                <aside className={`filespanel ${sidebar ? "open" : ""}`}>
-                  <div className="paneltitle">
-                    <span>
-                      <Layers size={16} /> EXPLORADOR
-                    </span>
-                    <button
-                      className="closemobile"
-                      onClick={() => setSidebar(false)}
-                    >
-                      <X size={16} />
-                    </button>
-                  </div>
-                  <div className="foldertitle">
-                    <ChevronDown size={15} /> <span>EXEMPLOS</span>
-                  </div>
-                  <div className="filelist">
-                    {(Object.keys(examples) as ExampleKey[]).map((k) => (
-                      <button
-                        key={k}
-                        className={`fileitem ${active === k ? "selected" : ""}`}
-                        onClick={() => selectExample(k)}
-                      >
-                        <FileCode2 size={15} /> <span>{k}.rage</span>
-                        {active === k && <span className="filedot" />}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="asidefoot">
-                    <div className="asidefooticon">
-                      <Code2 size={20} />
-                    </div>
-                    <strong>Aprenda fazendo</strong>
-                    <p>
-                      Explore os exemplos para descobrir como funciona cada
-                      comando.
-                    </p>
-                    <button onClick={() => setTab("docs")}>
-                      Ver referência <ArrowRight size={13} />
-                    </button>
-                  </div>
-                </aside>
-                <div className="workarea">
-                  <div className="editorbar">
-                    <div className="editorbartabs">
-                      <button
-                        className="showfiles"
-                        onClick={() => setSidebar(true)}
-                      >
-                        <Menu size={16} />
-                      </button>
-                      <div className="editorfile">
-                        <FileCode2 size={16} /> main.rage{" "}
-                        <span className="editeddot" />
-                      </div>
-                    </div>
-                    <div className="editoractions">
-                      <Tooltip title="Restaurar exemplo">
-                        <button
-                          className="iconbtn"
-                          onClick={() => setSource(examples[active].code)}
-                        >
-                          <RotateCcw size={15} />
-                        </button>
-                      </Tooltip>
-                      <Tooltip title="Copiar código">
-                        <button
-                          className="iconbtn"
-                          onClick={() =>
-                            void navigator.clipboard.writeText(source)
-                          }
-                        >
-                          <Copy size={15} />
-                        </button>
-                      </Tooltip>
-                      <Tooltip title="Baixar .rage">
-                        <button
-                          className="iconbtn"
-                          onClick={() => {
-                            const a = document.createElement("a");
-                            a.href = URL.createObjectURL(
-                              new Blob([source], { type: "text/plain" }),
-                            );
-                            a.download = "main.rage";
-                            a.click();
-                            URL.revokeObjectURL(a.href);
-                          }}
-                        >
-                          <Download size={15} />
-                        </button>
-                      </Tooltip>
-                    </div>
-                  </div>
-                  <div className="editorcontainer">
-                    <Editor
-                      height="100%"
-                      language="ragelang"
-                      theme="rage"
-                      value={source}
-                      onChange={(v) => setSource(v || "")}
-                      onMount={handleEditorMount}
-                      options={{
-                        fontSize: 13.5,
-                        fontFamily: "JetBrains Mono, Consolas, monospace",
-                        minimap: { enabled: false },
-                        scrollBeyondLastLine: false,
-                        wordWrap: "on",
-                        automaticLayout: true,
-                        lineNumbersMinChars: 3,
-                        folding: true,
-                        padding: { top: 20, bottom: 20 },
-                        renderLineHighlight: "line",
-                        overviewRulerLanes: 0,
-                        tabSize: 4,
-                        smoothScrolling: true,
-                      }}
-                    />
-                  </div>
-                  <div className="editortoolbar">
-                    <div className="editorstats">
-                      <span>
-                        <Braces size={14} /> RageLang
-                      </span>
-                      <span>{lines} linhas</span>
-                      <span>UTF-8</span>
-                    </div>
-                    <div className="toolbuttons">
-                      <button
-                        className="compilebtn"
-                        disabled={busy || !apiReady}
-                        onClick={() => void submit("compile")}
-                      >
-                        <WandSparkles size={16} /> Compilar
-                      </button>
-                      <button
-                        id="run-button"
-                        className="runbtn"
-                        disabled={busy || !apiReady}
-                        onClick={() => void submit("run")}
-                      >
-                        <Play size={15} fill="currentColor" />
-                        {busy ? "Processando..." : "Executar"}{" "}
-                        <span className="hotkey">⌘ ↵</span>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="terminalpane">
-                    <div className="terminalhead">
-                      <div className="terminaltabs">
-                        <button
-                          className={mode === "console" ? "active" : ""}
-                          onClick={() => setMode("console")}
-                        >
-                          <Terminal size={15} /> Terminal
-                        </button>
-                        <button
-                          className={mode === "csharp" ? "active" : ""}
-                          onClick={() => setMode("csharp")}
-                        >
-                          <Code2 size={15} /> Código C#
-                        </button>
-                      </div>
-                      <div className="terminalextras">
-                        <span>
-                          {result?.ok ? "● Compilado" : "● Aguardando"}
-                        </span>
-                        <button
-                          onClick={() => {
-                            setLogs([
-                              {
-                                type: "info",
-                                content:
-                                  "Terminal limpo. Pronto para compilar.",
-                              },
-                            ]);
-                            setResult(null);
-                          }}
-                          title="Limpar terminal"
-                        >
-                          <RotateCcw size={14} />
-                        </button>
-                      </div>
-                    </div>
-                    {mode === "console" ? (
-                      <div className="terminalbody">
-                        {logs.map((log, i) => (
-                          <div className={`log log-${log.type}`} key={i}>
-                            {log.type === "error" ? (
-                              <CircleAlert size={14} />
-                            ) : log.type === "success" ? (
-                              <Check size={14} />
-                            ) : log.type === "info" ? (
-                              <span className="prompt">›</span>
-                            ) : (
-                              <span className="prompt">$</span>
-                            )}
-                            <pre>{log.content}</pre>
-                          </div>
-                        ))}
-                        <div ref={bottomRef} />
-                      </div>
-                    ) : (
-                      <div className="csharpbody">
-                        {result?.csharp ? (
-                          <>
-                            <div className="csharptop">
-                              <span>Programa.cs — gerado automaticamente</span>
-                              <button
-                                onClick={() =>
-                                  void navigator.clipboard.writeText(
-                                    result.csharp || "",
-                                  )
-                                }
-                              >
-                                <Copy size={14} /> Copiar
-                              </button>
-                            </div>
-                            <pre>{result.csharp}</pre>
-                          </>
-                        ) : (
-                          <div className="emptycsharp">
-                            <Code2 size={28} />
-                            <p>
-                              Compile um programa para visualizar o C# gerado.
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  <div className="inputbar">
-                    <div>
-                      <strong>Entrada do programa</strong>
-                      <span>Uma entrada por linha para ASK_ME_ANYTHING</span>
-                    </div>
-                    <textarea
-                      value={inputs}
-                      onChange={(e) => setInputs(e.target.value)}
-                      placeholder={"Ex.: 9001\n(Preencha antes de executar)"}
-                      rows={2}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="workspacebottom">
-                <span>
-                  <Zap size={14} /> Dica: pressione <kbd>Ctrl</kbd> +{" "}
-                  <kbd>Enter</kbd> para executar.
-                </span>
-                <span>RageLang → Python AST → C#</span>
-              </div>
-            </section>
-          ) : tab === "docs" ? (
-            <section className="contentsection">
-              <div className="sectioneyebrow">REFERÊNCIA DA LINGUAGEM</div>
-              <h2>
-                O dicionário dos <span>memes.</span>
-              </h2>
-              <p>Conheça os comandos suportados nesta versão da RageLang.</p>
-              <div className="docgrid">
-                {keywords.map(([rage, usual, meaning]) => (
-                  <div className="docitem" key={rage}>
-                    <code>{rage}</code>
-                    <span>→ {usual}</span>
-                    <p>{meaning}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="notebox">
-                <BookOpen size={20} />
-                <div>
-                  <strong>Como escrever RageLang?</strong>
-                  <p>
-                    Declare variáveis com POKER_FACE, use tipos OVER_9000,
-                    ME_GUSTA ou FUCK_YEAH, finalize instruções com ponto e
-                    vírgula e delimite blocos com chaves. Funções, listas e
-                    NOT_BAD ainda não foram implementados.
-                  </p>
-                </div>
-              </div>
-              <button
-                className="primarybtn"
-                onClick={() => setTab("playground")}
-              >
-                Testar no playground <ArrowRight size={16} />
-              </button>
-            </section>
-          ) : (
-            <section className="contentsection">
-              <div className="sectioneyebrow">POR TRÁS DOS MEMES</div>
-              <h2>
-                Da ideia ao <span>compilador.</span>
-              </h2>
-              <p>
-                RageLang é um projeto acadêmico de Compiladores feito com
-                Python. O site foi construído em React e TypeScript.
-              </p>
-              <div className="pipeline">
-                {[
-                  [
-                    "01",
-                    "Análise léxica",
-                    "lexer.py",
-                    "Identifica palavras-chave, números, operadores e outros tokens.",
-                  ],
-                  [
-                    "02",
-                    "Análise sintática",
-                    "parser.py",
-                    "Interpreta as regras da gramática e constrói uma AST.",
-                  ],
-                  [
-                    "03",
-                    "Análise semântica",
-                    "compiler.py",
-                    "Verifica tipos, constantes, variáveis e escopos.",
-                  ],
-                  [
-                    "04",
-                    "Geração C#",
-                    "compiler.py",
-                    "Produz um programa C# equivalente ao código RageLang.",
-                  ],
-                  [
-                    "05",
-                    "Execução didática",
-                    "runner.py",
-                    "Executa a AST com limites de passos e saída, sem rodar C# no servidor.",
-                  ],
-                ].map(([n, title, file, desc]) => (
-                  <div className="pipelineitem" key={n}>
-                    <span className="pipenum">{n}</span>
-                    <div>
-                      <strong>{title}</strong>
-                      <code>{file}</code>
-                      <p>{desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="notebox">
-                <CircleAlert size={20} />
-                <div>
-                  <strong>Compilação versus execução</strong>
-                  <p>
-                    O botão Compilar utiliza a cadeia original RageLang → C#. Já
-                    Executar usa um interpretador seguro da AST, apenas para
-                    demonstrar os programas no navegador. Não é uma execução do
-                    C# pelo .NET.
-                  </p>
-                </div>
-              </div>
-            </section>
-          )}
-          <div className="featurestrip">
-            <div>
-              <div className="featureicon purple">
-                <Code2 size={22} />
-              </div>
-              <strong>Sintaxe original</strong>
-              <p>Palavras-chave inspiradas nos memes que fizeram história.</p>
-            </div>
-            <div>
-              <div className="featureicon blue">
-                <Braces size={22} />
-              </div>
-              <strong>Compilação de verdade</strong>
-              <p>Lexer, parser, análise semântica e geração de C#.</p>
-            </div>
-            <div>
-              <div className="featureicon green">
-                <SquareTerminal size={22} />
-              </div>
-              <strong>Playground interativo</strong>
-              <p>Editor completo e terminal para aprender fazendo.</p>
-            </div>
-          </div>
-        </main>
-        <footer>
-          <div className="footerinner">
-            <Logo />
-            <span>
-              Feito com <span className="heart">♥</span>, brilho neon e uma dose
-              absurda de memes clássicos. © RageLang
-            </span>
-            <button onClick={() => setTab("about")}>
-              Sobre o projeto <ExternalLink size={14} />
-            </button>
-          </div>
-        </footer>
-      </div>
-    </ThemeProvider>
+    <div className="app">
+      <Header page={page} setPage={setPage} onGo={scrollToWorkspace} />
+      <Hero onStart={scrollToWorkspace} onDocs={() => setPage("docs")} />
+      <main className="site-main">
+        {page === "playground" ? (
+          <>
+            <MemeGallery />
+            <Playground
+              service={service}
+              source={source}
+              setSource={setSource}
+              active={active}
+              selectExample={selectExample}
+              inputs={inputs}
+              setInputs={setInputs}
+              result={result}
+              logs={logs}
+              busy={busy}
+              action={submit}
+              mode={mode}
+              setMode={setMode}
+              bottomRef={bottomRef}
+              onMount={handleMount}
+            />
+          </>
+        ) : page === "docs" ? (
+          <Docs />
+        ) : (
+          <About />
+        )}
+      </main>
+      <footer className="footer">
+        <div>
+          <b>RAGELANG.EXE</b>
+          <span>© 2026 • FEITO COM MEMES, CAFÉ E CÓDIGO.</span>
+          <span>
+            PROBLEM? <Face name="trollface" />
+          </span>
+        </div>
+      </footer>
+    </div>
   );
 }

@@ -22,16 +22,15 @@ FOREVER_ALONE (!acabou) {
   olamundo: {
     name: "Hello, World!",
     detail: "Sua primeira mensagem",
-    code: `// RageLang — Meme starter pack
+    code: `// Olá, mundo memético!
 POKER_FACE ME_GUSTA mensagem = "Hello, RageLang!";
 CEREAL_GUY(mensagem);
-CEREAL_GUY("Much Wow. Very code.");
-CEREAL_GUY("LOL Internet.");`,
+CEREAL_GUY("Much Wow. Very code.");`,
   },
   contagem: {
-    name: "Contador Rage",
+    name: "Contador",
     detail: "Laços e operadores",
-    code: `// Contagem regressiva memética
+    code: `// Contagem regressiva
 POKER_FACE OVER_9000 n = 5;
 FOREVER_ALONE (n > 0) {
     CEREAL_GUY(n);
@@ -59,18 +58,16 @@ POKER_FACE OVER_9000 idade = "vinte";
 CEREAL_GUY(idade);`,
   },
 } as const;
-
 export type ExampleKey = keyof typeof examples;
-
 export const keywords: [string, string, string][] = [
   ["POKER_FACE", "var", "Variável mutável"],
-  ["TRUE_STORY", "const", "Constante imutável"],
+  ["TRUE_STORY", "const", "Constante"],
   ["OVER_9000", "int", "Número inteiro"],
   ["ME_GUSTA", "string", "Texto"],
   ["FUCK_YEAH", "bool", "Booleano"],
   ["DERP", "if", "Condição"],
   ["I_LIED", "else", "Alternativa"],
-  ["FOREVER_ALONE", "while", "Laço de repetição"],
+  ["FOREVER_ALONE", "while", "Laço"],
   ["CEREAL_GUY", "print", "Imprimir saída"],
   ["ASK_ME_ANYTHING", "read", "Ler entrada"],
   ["NO_GUY", "false", "Falso"],
