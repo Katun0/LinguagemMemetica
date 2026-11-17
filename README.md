@@ -73,3 +73,4 @@ A linguagem também aceita vários sinônimos em português, como `SE`, `ENQUANT
 - Suporte a `I_LIED DERP` e instruções `;` vazias.
 - Tratamento de escapes e validação de números inválidos.
 - Casos de teste de regressão.
+
